@@ -2,6 +2,8 @@ package com.example.pruebas_json;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,8 +17,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
     EditText name_troop;
@@ -36,29 +42,43 @@ public class MainActivity extends AppCompatActivity {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LeerWs();
-            }
-        });
-    }
-    private void LeerWs(){
-        String url="https://1846-2800-484-1c82-389-50ed-6b98-1253-99d1.ngrok-free.app";
-        StringRequest postRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try {
-                    JSONObject jsonObject=new JSONObject(response);
-                    stats.setText(jsonObject.getString("estadistidas"));
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
+                Log.d("MainActivity", "aquí estoy");
+                if (!name_troop.getText().toString().isEmpty()){
+                    String name = name_troop.getText().toString().replace(" ", "").toLowerCase();
+                    if (name.contains(".")) {
+                        name = name.replace(".", "_");
+                    }
+                    barbarian(name);
+                }else{
+                    stats.setText("No se encontró la tropa");
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("error",error.getMessage());
+
             }
         });
-        Volley.newRequestQueue(this).add(postRequest);
     }
+
+    private void barbarian(String name) {
+        String name_json=name;
+        try {
+            int resourceId = getResources().getIdentifier(name_json, "raw", getPackageName());
+            InputStream inputStream = getResources().openRawResource(resourceId);
+
+            byte[] buffer = new byte[inputStream.available()];
+            inputStream.read(buffer);
+            inputStream.close();
+            String json = new String(buffer, "UTF-8");
+
+            // Analizar el JSON
+
+            JSONObject jsonObject = new JSONObject(json);
+            Log.d("MainActivity", String.valueOf(jsonObject));
+
+            //stats.setText(String.valueOf(jsonObject));
+
+        } catch (IOException | JSONException e) {
+            Log.d("MainActivity","Error:  " + e);
+            e.printStackTrace();
+        }
+    }
+
 }
