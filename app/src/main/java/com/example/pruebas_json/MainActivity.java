@@ -2,8 +2,6 @@ package com.example.pruebas_json;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,18 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
@@ -47,7 +39,11 @@ public class MainActivity extends AppCompatActivity {
                     if (name.contains(".")) {
                         name = name.replace(".", "_");
                     }
-                    barbarian(name);
+                    try {
+                        barbarian(name);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     stats.setText("No se encontró la tropa");
                 }
@@ -56,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void barbarian(String name) {
+    private void barbarian(String name) throws JSONException {
         String name_json = name;
         try {
             int resourceId = getResources().getIdentifier(name_json, "raw", getPackageName());
@@ -83,14 +79,35 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("keys", key);
                     Log.d("value", (String) value);
                 } else if (value2.equals(JSONObject.class)) {
-                    Log.d("keys", key);
-                    stats.setText(((JSONObject) value).toString());
+
+                    JSONObject nestedJsonObject = (JSONObject) value;
+                    // Ahora puedes trabajar con el objeto JSON nestedJsonObject
+                    // Por ejemplo, puedes obtener sus claves y valores
+                    Iterator<String> nestedKeys = nestedJsonObject.keys();
+                    while (nestedKeys.hasNext()) {
+                        String nestedKey = nestedKeys.next();
+                        Object nestedValue = nestedJsonObject.get(nestedKey);
+                        Log.d("nestedKey", nestedKey);
+                        Log.d("nestedValue", nestedValue.toString());
+
+                        JSONObject statsJsonObject = (JSONObject) nestedValue;
+                        Iterator<String> statsKeys = statsJsonObject.keys();
+
+                        while (statsKeys.hasNext()){
+                            String statKey = statsKeys.next();
+                            Object statValue = statsJsonObject.get(statKey);
+                            Log.d("statKey", statKey);
+                            Log.d("statValue", statValue.toString());
+                        }
+
+                    }
+                } else if (value.equals(null)) {
+                    stats.setText("Sin estadisticas");
                 }
             }
-            //stats.setText(String.valueOf(jsonObject));
-        } catch (IOException | JSONException e) {
-            Log.d("MainActivity", "Error:  " + e);
-            e.printStackTrace();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
+        //stats.setText(String.valueOf(jsonObject));
     }
 }
