@@ -23,12 +23,12 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
     EditText name_troop;
     TextView stats;
     Button btn_search;
-
 
 
     @Override
@@ -43,13 +43,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("MainActivity", "aquí estoy");
-                if (!name_troop.getText().toString().isEmpty()){
+                if (!name_troop.getText().toString().isEmpty()) {
                     String name = name_troop.getText().toString().replace(" ", "").toLowerCase();
                     if (name.contains(".")) {
                         name = name.replace(".", "_");
                     }
                     barbarian(name);
-                }else{
+                } else {
                     stats.setText("No se encontró la tropa");
                 }
 
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void barbarian(String name) {
-        String name_json=name;
+        String name_json = name;
         try {
             int resourceId = getResources().getIdentifier(name_json, "raw", getPackageName());
             InputStream inputStream = getResources().openRawResource(resourceId);
@@ -72,11 +72,25 @@ public class MainActivity extends AppCompatActivity {
 
             JSONObject jsonObject = new JSONObject(json);
             Log.d("MainActivity", String.valueOf(jsonObject));
+            Iterator<String> keys = jsonObject.keys();
+
+
+            while (keys.hasNext()) {
+                String key = keys.next();
+                Object value = jsonObject.get(key);
+
+                Log.d("keys", key);
+                Log.d("class of object", value.getClass().toString());
+                Log.d("value", (String) value);
+
+
+            }
+
 
             //stats.setText(String.valueOf(jsonObject));
 
         } catch (IOException | JSONException e) {
-            Log.d("MainActivity","Error:  " + e);
+            Log.d("MainActivity", "Error:  " + e);
             e.printStackTrace();
         }
     }
