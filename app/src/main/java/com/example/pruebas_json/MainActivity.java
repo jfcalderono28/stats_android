@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     TextView stats;
     Button btn_search;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,25 +73,24 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MainActivity", String.valueOf(jsonObject));
             Iterator<String> keys = jsonObject.keys();
 
-
             while (keys.hasNext()) {
                 String key = keys.next();
                 Object value = jsonObject.get(key);
 
-                Log.d("keys", key);
-                Log.d("class of object", value.getClass().toString());
-                Log.d("value", (String) value);
+                Class value2 = value.getClass();
 
-
+                if (value2.equals(String.class)) {
+                    Log.d("keys", key);
+                    Log.d("value", (String) value);
+                } else if (value2.equals(JSONObject.class)) {
+                    Log.d("keys", key);
+                    stats.setText(((JSONObject) value).toString());
+                }
             }
-
-
             //stats.setText(String.valueOf(jsonObject));
-
         } catch (IOException | JSONException e) {
             Log.d("MainActivity", "Error:  " + e);
             e.printStackTrace();
         }
     }
-
 }
