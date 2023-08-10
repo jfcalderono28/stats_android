@@ -1,3 +1,74 @@
 <resources>
     <string name="app_name">pruebas_json</string>
+    <string-array name="troops">
+        <item>Barbarian</item>
+        <item>Archer</item>
+        <item>Giant</item>
+        <item>Goblin</item>
+        <item>Wall Breaker</item>
+        <item>Balloon</item>
+        <item>Wizard</item>
+        <item>Healer</item>
+        <item>Dragon</item>
+        <item>P.E.K.K.A</item>
+        <item>Baby Dragon</item>
+        <item>Miner</item>
+        <item>Electro Dragon</item>
+        <item>Yeti</item>
+        <item>Yetimite</item>
+        <item>Dragon Rider</item>
+        <item>Electro Titan</item>
+        <item>Ice Wizard</item>
+        <item>Battle Ram </item>
+        <item>Pumpkin Barbarian</item>
+        <item>Giant Skeleton</item>
+        <item>Skeleton Barrel</item>
+        <item>El Primo</item>
+        <item>Party Wizard</item>
+        <item>Royal Ghost</item>
+        <item>Ram Rider</item>
+        <item>Minion</item>
+        <item>Hog Rider</item>
+        <item>Valkyrie</item>
+        <item>Golem</item>
+        <item>Golemite</item>
+        <item>Witch </item>
+        <item>Lava Hound</item>
+        <item>Lava Pup</item>
+        <item>Bowler</item>
+        <item>Ice Golem</item>
+        <item>Headhunter</item>
+        <item>Apprentice Warden</item>
+        <item>Super Barbarian</item>
+        <item>Super Archer</item>
+        <item>Super Giant</item>
+        <item>Sneaky Goblin</item>
+        <item>Super Wall Breaker</item>
+        <item>Rocket Balloon</item>
+        <item>Super Wizard</item>
+        <item>Super Dragon</item>
+        <item>Inferno Dragon</item>
+        <item>Super Minion</item>
+        <item>Super Valkyrie</item>
+        <item>Super Witch</item>
+        <item>Ice Hound</item>
+        <item>Super Bowler</item>
+        <item>Super Miner</item>
+        <item>Super Hog Rider</item>
+        <item>Skeleton </item>
+        <item>Bat </item>
+        <item>Raged Barbarian</item>
+        <item>Sneaky Archer</item>
+        <item>Boxer Giant</item>
+        <item>Beta Minion</item>
+        <item>Bomber</item>
+        <item>Baby Dragon</item>
+        <item>Cannon Cart</item>
+        <item>Night Witch</item>
+        <item>Drop Ship</item>
+        <item>Power P.E.K.K.A</item>
+        <item>Hog Glider</item>
+        <item>Hog Rider</item>
+        <!-- Agrega más elementos -->
+    </string-array>
 </resources>
